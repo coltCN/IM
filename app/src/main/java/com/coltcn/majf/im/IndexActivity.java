@@ -28,7 +28,7 @@ public class IndexActivity extends Activity {
             timer.cancel();
 //			}
             Intent intent = new Intent(IndexActivity.this,
-                    MainActivity.class);
+                    CustMainActivity.class);
             startActivity(intent);
             finish();
             super.handleMessage(msg);

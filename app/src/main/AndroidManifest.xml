@@ -23,6 +23,8 @@
             android:name=".MainActivity" android:screenOrientation="portrait"/>
         <activity android:name=".MyWebView" android:screenOrientation="portrait"/>
         <activity android:name=".ChatActivity" android:label="chat"/>
+        <activity android:name=".CustActivity"/>
+        <activity android:name=".CustMainActivity"/>
 
         <!--<activity-->
             <!--android:name="com.tencent.weibo.webview.OAuthV2AuthorizeWebView"-->
