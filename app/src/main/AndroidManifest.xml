@@ -22,7 +22,7 @@
         <activity
             android:name=".MainActivity" android:screenOrientation="portrait"/>
         <activity android:name=".MyWebView" android:screenOrientation="portrait"/>
-        <activity android:name=".ChatActivity" android:label="chat"/>
+        <activity android:name=".ChatActivity" android:label="chat" android:parentActivityName=".CustMainActivity"/>
         <activity android:name=".CustActivity"/>
         <activity android:name=".CustMainActivity"/>
 

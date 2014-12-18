@@ -5,12 +5,17 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.support.v4.app.NavUtils;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -52,8 +57,33 @@ public class ChatActivity extends Activity implements OnClickListener {
     private String voiceName;
     private long startVoiceT, endVoiceT;
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home :
+                Intent intent = NavUtils.getParentActivityIntent(this);
+                if(NavUtils.shouldUpRecreateTask(this,intent)){
+                    TaskStackBuilder.create(this).addNextIntent(intent).startActivities();
+                    Log.d("sys","showldup");
+                }else {
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    NavUtils.navigateUpTo(this,intent);
+                    Log.d("sys","notup");
+                }
+                return true;
+        }
+        return false;
+    }
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        HuiHua hh = (HuiHua) bundle.getSerializable("huihua");
+        ActionBar bar = getActionBar();
+        bar.setTitle(hh.getName1());
+        bar.setDisplayShowHomeEnabled(false);
+        bar.setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.chat);
         // 启动activity时不自动弹出软键盘
         getWindow().setSoftInputMode(

@@ -1,6 +1,8 @@
 package com.coltcn.majf.im;
 
-public class HuiHua {
+import java.io.Serializable;
+
+public class HuiHua implements Serializable{
 	private String weixinID1;
 	private String weixinID2;
 	private String name1;
