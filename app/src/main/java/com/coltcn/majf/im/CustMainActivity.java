@@ -7,9 +7,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Toast;
 
+import com.astuetz.PagerSlidingTabStrip;
 import com.coltcn.majf.im.Fragment.AddressBookFragment;
 import com.coltcn.majf.im.Fragment.DiscoverFragment;
 import com.coltcn.majf.im.Fragment.WeiChatFragment;
@@ -35,9 +37,9 @@ public class CustMainActivity extends FragmentActivity{
 
         setContentView(R.layout.viewpager_main);
 
-        PagerTabStrip mPagerTabStrip=(PagerTabStrip) findViewById(R.id.pager_tabstrip);
-        //设置导航条的颜色
-        mPagerTabStrip.setTabIndicatorColorResource(android.R.color.holo_green_light);
+//        PagerTabStrip mPagerTabStrip=(PagerTabStrip) findViewById(R.id.pager_tabstrip);
+//        //设置导航条的颜色
+//        mPagerTabStrip.setTabIndicatorColorResource(android.R.color.holo_green_light);
 
 
 //        viewList.add(getLayoutInflater().inflate(R.layout.activity_cust_main, null));
@@ -64,5 +66,15 @@ public class CustMainActivity extends FragmentActivity{
                 Toast.makeText(getApplicationContext(),"当前第"+viewIndex+"页",Toast.LENGTH_SHORT).show();
             }
         });
+        final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources()
+                .getDisplayMetrics());
+        viewPager.setPageMargin(pageMargin);
+
+        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        tabs.setShouldExpand(true);
+        tabs.setIndicatorColorResource(android.R.color.holo_green_light);
+        tabs.setViewPager(viewPager);
+
+
     }
 }
