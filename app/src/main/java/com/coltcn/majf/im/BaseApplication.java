@@ -19,36 +19,13 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Log.i("SYS","app created");
-        new Thread(){
-            @Override
-            public void run() {
-                connectServer();
-            }
-        }.start();
     }
     
-    private void connectServer(){
-        try{
-            socket = new Socket(SERVER_IP,SERVER_PORT);
-            Log.i("conn","与服务器建立连接");
-        }catch (Exception e){
-            Log.e("conn","连接服务器失败！",e);
-        }
-        
-    }
+    
 
     @Override
     public void onTerminate() {
-        if (socket!=null &&!socket.isClosed()){
-            try {
-                socket.close();
-                Log.i("conn","释放连接");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        socket = null;
-        Log.i("SYS","app close");
+        Log.i("SYS","app onTerminate");
         super.onTerminate();
     }
 }
