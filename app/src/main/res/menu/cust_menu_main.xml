@@ -4,6 +4,7 @@
         android:id="@+id/action_search"
         android:title="search"
         android:showAsAction="always"
+        android:actionViewClass="android.w"
         android:icon="@drawable/actionbar_search_icon"/>
     <item
         android:id="@+id/action_more"

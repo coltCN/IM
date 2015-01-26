@@ -11,6 +11,15 @@
             backward-compatibility can go here.
         -->
     </style>
+    
+    <style name="CustAppTheme" parent="android:style/Theme.Holo.Light.DarkActionBar">
+        <item name="android:actionOverflowButtonStyle" >@style/weixinActionOverflowButtonStyle</item>
+    </style>
+    
+    <style name="weixinActionOverflowButtonStyle">
+        <item name="android:src">@drawable/actionbar_add_icon</item>
+        
+    </style>
 
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">

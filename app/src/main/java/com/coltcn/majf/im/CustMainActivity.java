@@ -8,7 +8,10 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.util.TypedValue;
+import android.view.Menu;
 import android.view.View;
+import android.view.ViewConfiguration;
+import android.view.Window;
 import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
@@ -18,6 +21,8 @@ import com.coltcn.majf.im.Fragment.WeiChatFragment;
 import com.coltcn.majf.im.adpater.CustPagerViewAdapter;
 import com.coltcn.majf.im.adpater.ViewPageAdapter;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +36,15 @@ public class CustMainActivity extends FragmentActivity{
     private ArrayList<String> titleList = new ArrayList<String>();// 标题数据
     private ViewPager viewPager;
     private int viewIndex=0;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.cust_menu_6_0,menu);
+        setOverflowButtonAlways();
+        getActionBar().setDisplayShowHomeEnabled(false);
+        return true;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +89,33 @@ public class CustMainActivity extends FragmentActivity{
         tabs.setIndicatorColorResource(android.R.color.holo_green_light);
         tabs.setViewPager(viewPager);
 
+    }
+    
+    private void setOverflowButtonAlways(){
+        ViewConfiguration config = ViewConfiguration.get(this);
+        try {
+            Field menuKey = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
+            menuKey.setAccessible(true);
+            menuKey.setBoolean(config,true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+    }
+
+    @Override
+    public boolean onMenuOpened(int featureId, Menu menu) {
+        if (featureId == Window.FEATURE_ACTION_BAR && menu != null){
+            if(menu.getClass().getSimpleName().equals("MenuBuilder")){
+                try {
+                    Method m = menu.getClass().getDeclaredMethod("setOptionalIconsVisible",Boolean.TYPE);
+                    m.setAccessible(true);
+                    m.invoke(menu,true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return true;
     }
 }
