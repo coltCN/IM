@@ -1,6 +1,8 @@
 package com.coltcn.majf.im;
 
 import java.io.File;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -8,10 +10,13 @@ import java.util.List;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.TaskStackBuilder;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.SystemClock;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
@@ -31,6 +36,8 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.coltcn.majf.im.service.SocketService;
 
 public class ChatActivity extends Activity implements OnClickListener {
     /** Called when the activity is first created. */
@@ -56,6 +63,21 @@ public class ChatActivity extends Activity implements OnClickListener {
     private Handler mHandler = new Handler();
     private String voiceName;
     private long startVoiceT, endVoiceT;
+
+    private SocketService.SocketBinder binder;
+    private OutputStream outStream;
+    private ServiceConnection connection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            binder = (SocketService.SocketBinder) service;
+            outStream = binder.getOutStream();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+        }
+    };
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -91,6 +113,9 @@ public class ChatActivity extends Activity implements OnClickListener {
         initView();
 
         initData();
+
+//        Intent intent1 = new Intent(this,SocketService.class);
+//        bindService(intent1,connection,BIND_AUTO_CREATE);
     }
 
     public void initView() {
@@ -203,6 +228,11 @@ public class ChatActivity extends Activity implements OnClickListener {
             mEditTextContent.setText("");
 
             mListView.setSelection(mListView.getCount() - 1);
+
+            PrintWriter out = new PrintWriter(outStream);
+            out.println(contString);
+            out.flush();
+
         }
     }
 

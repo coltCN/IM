@@ -8,6 +8,7 @@ import android.os.IBinder;
 import android.util.Log;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.Socket;
 
 /**
@@ -17,13 +18,24 @@ public class SocketService extends Service {
     
     private final static String TAG = "SocketService";
 
-    private final static String SERVER_IP="10.8.26.119";
-    private final static int SERVER_PORT=8980;
+//    private final static String SERVER_IP="10.8.26.119";
+    private final static String SERVER_IP="192.168.1.127";
+    private final static int SERVER_PORT=9000;
     private Socket socket;
     private SocketBinder binder;
     
-    class SocketBinder extends Binder{
-        
+    public class SocketBinder extends Binder{
+
+        public OutputStream getOutStream(){
+            if (socket!=null && !socket.isClosed() && socket.isConnected()){
+                try {
+                    return socket.getOutputStream();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
         
     }
 
@@ -91,6 +103,7 @@ public class SocketService extends Service {
 
 
     private void connectServer(){
+        Log.i("conn","正在连接服务器...");
         try{
             if(socket==null || socket.isClosed())
                 socket = new Socket(SERVER_IP,SERVER_PORT);

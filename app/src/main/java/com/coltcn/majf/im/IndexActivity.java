@@ -4,6 +4,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.coltcn.majf.im.SaveDate;
+import com.coltcn.majf.im.service.SocketService;
 import com.tencent.weibo.oauthv2.OAuthV2;
 
 import android.app.Activity;
@@ -28,7 +29,7 @@ public class IndexActivity extends Activity {
             timer.cancel();
 //			}
             Intent intent = new Intent(IndexActivity.this,
-                    CustMainActivity.class);
+                    MainActivity6.class);
             startActivity(intent);
             finish();
             super.handleMessage(msg);
@@ -40,6 +41,8 @@ public class IndexActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.index);
+//        Intent intent = new Intent(this, SocketService.class);
+//        startService(intent);
 
         timer = new Timer();
         timer.schedule(new TimerTask() {

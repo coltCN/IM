@@ -14,7 +14,7 @@ import android.widget.TextView;
  */
 public class TabFragment extends Fragment {
     private String mTitle = "Default";
-    private static final String TITLE = "title";
+    public static final String TITLE = "title";
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
