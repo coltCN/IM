@@ -8,15 +8,17 @@ import android.view.View;
  * Created by colt on 15/1/26.
  */
 public class ChangeColorIconWithText extends View {
+
+    public ChangeColorIconWithText(Context context) {
+        this(context,null);
+    }
     public ChangeColorIconWithText(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs,0);
     }
 
     public ChangeColorIconWithText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    public ChangeColorIconWithText(Context context) {
-        super(context);
-    }
+    
 }
