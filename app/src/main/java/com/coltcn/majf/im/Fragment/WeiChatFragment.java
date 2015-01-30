@@ -47,7 +47,7 @@ public class WeiChatFragment extends Fragment {
     private ArrayList<HuiHua> getHuahui(){
         ArrayList<HuiHua> hhList = new ArrayList<HuiHua>();
         HuiHua h1 = new HuiHua();
-        h1.setTxPath(R.drawable.icon+"");
+        h1.setTxPath(R.drawable.icon_app+"");
         h1.setName1("肖秀");
         h1.setLastContent("这是唯一一个正常的朋友");
         h1.setLastTime("下午 18:00");

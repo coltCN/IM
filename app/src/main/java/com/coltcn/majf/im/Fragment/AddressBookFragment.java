@@ -44,7 +44,7 @@ public class AddressBookFragment extends Fragment {
         c2.setName("QQ团队");
 
         ContactP c3 = new ContactP();
-        c3.setTxPath(R.drawable.icon+"");
+        c3.setTxPath(R.drawable.icon_app+"");
         c3.setName("微信团队");
 
         ContactP c4 = new ContactP();
