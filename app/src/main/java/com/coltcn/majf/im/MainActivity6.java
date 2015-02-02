@@ -6,11 +6,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.ViewConfiguration;
 import android.view.Window;
 
 import com.coltcn.majf.im.Fragment.TabFragment;
+import com.coltcn.majf.im.view.ChangeColorIconWithText;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -25,9 +27,12 @@ public class MainActivity6 extends FragmentActivity{
     private List<Fragment> mTabs = new ArrayList<>();
     private String[] mTitles = new String[]{"Fisrst","Second","Third","Fourth"};
     private FragmentPagerAdapter mAdapter;
+    
+    private List<ChangeColorIconWithText> mIndicator ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i("MainActivity6","onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.viewpager_main_6_0);
         setOverflowButtonAlways();

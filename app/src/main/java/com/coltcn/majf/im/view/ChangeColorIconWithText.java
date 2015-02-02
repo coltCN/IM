@@ -5,9 +5,13 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Looper;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
@@ -27,7 +31,7 @@ public class ChangeColorIconWithText extends View {
     private Bitmap mBitmap;
     private Paint mPaint;
     
-    private  int mAplpha;
+    private  float mAplpha = 1.0f;
     
     private Rect mIconRect;
     private Rect mTextBound;
@@ -79,6 +83,7 @@ public class ChangeColorIconWithText extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        Log.i("colorIcon","onMeasure");
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         int iconWidth = Math.min(getMeasuredWidth() - getPaddingLeft()-getPaddingRight(),
                 getMeasuredHeight() - getPaddingTop() - getPaddingBottom() - mTextBound.height());
@@ -91,8 +96,68 @@ public class ChangeColorIconWithText extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        
+        Log.i("colorIcon","onDraw");
         canvas.drawBitmap(mIconBitmap,null,mIconRect,null);
-        //准备mBitmap,setAlpha,纯色,xfermode,图标
+        
+        int alpha = (int) Math.ceil(255 * mAplpha);
+        //准备mBitmap,setAlpha,纯色,xfermode,
+        setupTargetBitmap(alpha);
+        //1.绘制原文本，2.绘制变色文本
+        drawSourceText(canvas,alpha);
+        
+        drawTargetText(canvas,alpha);
+        
+        canvas.drawBitmap(mBitmap,0,0,null);
+    }
+
+    private void drawTargetText(Canvas canvas, int alpha) {
+        mTextPaint.setColor(mColor);
+        mTextPaint.setAlpha(alpha);
+        int x = getMeasuredWidth()/2 - mTextBound.width()/2;
+        int y = mIconRect.bottom + mTextBound.height();
+        canvas.drawText(mText,x,y,mTextPaint);
+    }
+
+    private void drawSourceText(Canvas canvas, int alpha) {
+        mTextPaint.setColor(0xff333333);
+        mTextPaint.setAlpha(255-alpha);
+        int x = getMeasuredWidth()/2 - mTextBound.width()/2;
+        int y = mIconRect.bottom + mTextBound.height();
+        canvas.drawText(mText,x,y,mTextPaint);
+    }
+
+    /**
+     * 在内存中绘制可变色的Icon*
+     */
+    private void setupTargetBitmap(int alpha) {
+        mBitmap = Bitmap.createBitmap(getMeasuredWidth(),getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+        
+        mCanvas = new Canvas(mBitmap);
+        mPaint = new Paint();
+        mPaint.setColor(mColor);
+        mPaint.setAntiAlias(true);
+        mPaint.setDither(true);
+        mPaint.setAlpha(alpha);
+        mCanvas.drawRect(mIconRect,mPaint);
+        mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
+        mPaint.setAlpha(255);
+        mCanvas.drawBitmap(mIconBitmap,null,mIconRect,mPaint);
+    }
+    
+    public void setIconAlpha(float alpha){
+        this.mAplpha = alpha;
+        invalidateView();
+        
+    }
+
+    /**
+     * 重绘*
+     */
+    private void invalidateView() {
+        if(Looper.getMainLooper() == Looper.myLooper()){
+            invalidate();
+        }else{
+            postInvalidate();
+        }
     }
 }

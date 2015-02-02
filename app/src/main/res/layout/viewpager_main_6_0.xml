@@ -18,8 +18,9 @@
         android:orientation="horizontal"
         android:background="@drawable/tab_bg">
         <com.coltcn.majf.im.view.ChangeColorIconWithText
+            android:id="@+id/id_indicator_one"
             android:layout_width="0dp"
-            android:layout_height="0dp" 
+            android:layout_height="fill_parent"
             android:layout_weight="1"
             hyman:icon="@drawable/ic_menu_start_conversation"
             hyman:color="#ff45c01a"
@@ -28,8 +29,9 @@
             android:padding="5dp"
             />
         <com.coltcn.majf.im.view.ChangeColorIconWithText
+            android:id="@+id/id_indicator_two"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="fill_parent"
             android:layout_weight="1"
             hyman:icon="@drawable/ic_menu_friendslist"
             hyman:color="#ff45c01a"
@@ -38,8 +40,9 @@
             android:padding="5dp"
             />
         <com.coltcn.majf.im.view.ChangeColorIconWithText
+            android:id="@+id/id_indicator_three"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="fill_parent"
             android:layout_weight="1"
             hyman:icon="@drawable/ic_menu_emoticons"
             hyman:color="#ff45c01a"
@@ -48,8 +51,9 @@
             android:padding="5dp"
             />
         <com.coltcn.majf.im.view.ChangeColorIconWithText
+            android:id="@+id/id_indicator_four"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="fill_parent"
             android:layout_weight="1"
             hyman:icon="@drawable/ic_menu_allfriends"
             hyman:color="#ff45c01a"
