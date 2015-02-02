@@ -9,7 +9,9 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Bundle;
 import android.os.Looper;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
@@ -31,12 +33,16 @@ public class ChangeColorIconWithText extends View {
     private Bitmap mBitmap;
     private Paint mPaint;
     
-    private  float mAplpha = 1.0f;
-    
+    private  float mAplpha;
+
     private Rect mIconRect;
     private Rect mTextBound;
     
     private Paint mTextPaint;
+
+    private static  final String INSTANCE_STATUS = "instance_status";
+
+    private static  final String STATUS_ALPHA = "status_aplpha";
     
     public ChangeColorIconWithText(Context context) {
         this(context,null);
@@ -108,6 +114,26 @@ public class ChangeColorIconWithText extends View {
         drawTargetText(canvas,alpha);
         
         canvas.drawBitmap(mBitmap,0,0,null);
+    }
+
+    @Override
+    protected Parcelable onSaveInstanceState() {
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(INSTANCE_STATUS,super.onSaveInstanceState());
+        bundle.putFloat(STATUS_ALPHA,mAplpha);
+        return bundle;
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        if(state instanceof Bundle){
+            Bundle bundle = (Bundle) state;
+            mAplpha = bundle.getFloat(STATUS_ALPHA);
+            super.onRestoreInstanceState(bundle.getParcelable(INSTANCE_STATUS));
+            return;
+        }
+        super.onRestoreInstanceState(state);
     }
 
     private void drawTargetText(Canvas canvas, int alpha) {
